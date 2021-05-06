@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="page-wrapper"> <!-- content -->
+<div>
+    {% if messages %}
+    {% for i in messages %}
+
+    <h5 style="margin-top:0px;text-align:center;background-color:Red;width:100%">{{i}}</h5>
+
+    {% endfor %}
+    {% endif %}
+
+</div>
+
+            <div class="content container-fluid">
+			<div class="page-header">
+					<div class="row">
+						<div class="col-lg-7 col-md-12 col-sm-12 col-12">
+							<h5 class="text-uppercase"></h5>
+						</div>
+					</div>
+				</div>
+                <div class="text-center">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-box">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div>
+                                        <form method="POST">
+												<div style="margin-left:300px;margin-right:300px;width:50%" class="custom-mt-form-group">
+												<h3>Paper Name</h3>
+												<select style="border:#01c4cb 2px solid" name="primary_area" required >
+                                                    {% for i in papers%}
+													<option value="{{i.conference_name}}">{{i.conference_name}}</option>
+                                                    {% endfor %}
+                                                    {% csrf_token %}
+												</select>
+												</div>
+                                            <button class="btn btn-primary">Assign</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+            </div>
+        </div>
+{% endblock %}

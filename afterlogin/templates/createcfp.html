@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+	.page-wrapper{
+	overflow-y: scroll;
+	}
+</style>
+
+        <div class="page-wrapper">
+            <div id="ALLFORM" class="content container-fluid">
+                <div class="page-header">
+					<div class="row">
+						<div class="col-lg-7 col-md-12 col-sm-12 col-12">
+							<h5 class="text-uppercase">Create New CFP</h5>
+						</div>
+					</div>
+				</div>
+				<div class="page-content">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+							<div class="card">
+								<form action="{% url 'createcfp' %}" method="POST" enctype="multipart/form-data">
+<!--								<div class="page-title">-->
+<!--									<div class="row">-->
+<!--										<div class="col-lg-12 col-md-12 col-sm-12 col-12">-->
+<!--											<div class="Page-title">Name and Acronym</div>-->
+<!--										</div>-->
+<!--									</div>-->
+<!--								</div>-->
+								<div class="card-body">
+									<div class="row">
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+											<div class="Page-title">Name and Acronym</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="conference_name" type="text" required />
+													<label  class="control-label">Conference Name</label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="conference_acronym" type="text" required />
+													<label class="control-label">Conference Acronym</label><i class="bar"></i>
+												</div>
+										</div>
+
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+											<div class="Page-title">Date and Deadlines</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="conference_start_date" type="date" required>
+													<label class="control-label">Start Date</label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="conference_end_date" type="date" required>
+													<label class="control-label">End Date</label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="cfp_abstract_deadlines" type="date" required>
+													<label class="control-label">CFP abstract registration deadline</label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="cfp_submission_deadline" type="date" required>
+													<label class="control-label">CFP submission deadline</label><i class="bar"></i>
+												</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+											<div class="Page-title">Conference Information</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="webpage" type="text" required/>
+													<label class="control-label">Webpage</label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="venue" type="text" required />
+													<label class="control-label">Venue</label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="city" type="text" required />
+													<label class="control-label">City</label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="country_region" type="text" required />
+													<label class="control-label">Country Region</label><i class="bar"></i>
+												</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+											<div class="Page-title">Research Areas</div>
+												<div class="form-group custom-mt-form-group">
+												<label>Primary Search Area</label>
+												<select name="primary_area" required >
+													<option value="Accounting and Finance">Accounting and Finance</option>
+													<option value="Art and Literature">Art and Literature</option>
+													<option value="Business and Management">Business and Management</option>
+													<option value="Chemistry">Chemistry</option>
+													<option value="Civil Engineering">Civil Engineering</option>
+													<option value="Computing">Computing</option>
+													<option value="Earth and Environmental Sciences">Earth and Environmental Sciences</option>
+													<option value="Economics">Economics</option>
+													<option value="Education Science">Education Science</option>
+													<option value="Energy">Energy</option>
+													<option value="Engineering">Engineering</option>
+													<option value="Geonomics and Bioinfirmatics">Geonomics and Bioinfirmatics</option>
+													<option value="Health Sciences">Health Sciences</option>
+													<option value="Language and Linguistics">Language and Linguistics</option>
+													<option value="Materials Sciences">Materials Sciences</option>
+													<option value="Mathmatics and Statistics">Mathmatics and Statistics</option>
+													<option value="Mechanical Engineering">Mechanical Engineering</option>
+													<option value="Philosophy and Psychology">Philosophy and Psychology</option>
+													<option value="Physics">Physics</option>
+													<option value="Social Sciences">Social Sciences</option>
+													<option value="Technology">Technology</option>
+												</select>
+
+												</div>
+												<div class="form-group custom-mt-form-group">
+												<label>Secondary Search Area</label>
+												<select name="secondary_area" required >
+													<option value="Accounting and Finance">Accounting and Finance</option>
+													<option value="Art and Literature">Art and Literature</option>
+													<option value="Business and Management">Business and Management</option>
+													<option value="Chemistry">Chemistry</option>
+													<option value="Civil Engineering">Civil Engineering</option>
+													<option value="Computing">Computing</option>
+													<option value="Earth and Environmental Sciences">Earth and Environmental Sciences</option>
+													<option value="Economics">Economics</option>
+													<option value="Education Science">Education Science</option>
+													<option value="Energy">Energy</option>
+													<option value="Engineering">Engineering</option>
+													<option value="Geonomics and Bioinfirmatics">Geonomics and Bioinfirmatics</option>
+													<option value="Health Sciences">Health Sciences</option>
+													<option value="Language and Linguistics">Language and Linguistics</option>
+													<option value="Materials Sciences">Materials Sciences</option>
+													<option value="Mathmatics and Statistics">Mathmatics and Statistics</option>
+													<option value="Mechanical Engineering">Mechanical Engineering</option>
+													<option value="Philosophy and Psychology">Philosophy and Psychology</option>
+													<option value="Physics">Physics</option>
+													<option value="Social Sciences">Social Sciences</option>
+													<option value="Technology">Technology</option>
+												</select>
+
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="area_notes" type="text" />
+													<label class="control-label">Area Notes</label><i class="bar"></i>
+												</div>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+											<div class="Page-title">Topic</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="topic_1" type="text" required />
+													<label class="control-label">Topic 1</label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="topic_2" type="text"  />
+													<label class="control-label">Topic 2</label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="topic_3" type="text"  />
+													<label class="control-label">Topic 3</label><i class="bar"></i>
+												</div>
+												<div  class="form-group custom-mt-form-group">
+													<input name="topic_4" type="text"  />
+													<label class="control-label">Topic 4</label><i class="bar"></i>
+												</div>
+										</div>
+
+										<div class="col-lg-6 col-md-6 col-sm-6 col-12">
+											<div class="Page-title">Extra Information</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="extra_information" type="text" />
+													<label class="control-label"></label><i class="bar"></i>
+												</div>
+										</div>
+												<div class="form-group custom-mt-form-group">
+													  <input type="file"  name="pdf" accept="application/pdf" style="margin-bottom:10px;">
+													<label class="control-label">Select Paper</label><i class="bar"></i>
+												</div>
+
+										<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+												<div class="form-group text-center custom-mt-form-group">
+													<button class="btn btn-primary mr-2" type="submit">Submit</button>
+													<button class="btn btn-secondary" type="reset">Cancel</button>
+												</div>
+										</div>
+									</div>
+								</div>
+								{% csrf_token %}
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+
+{% endblock %}

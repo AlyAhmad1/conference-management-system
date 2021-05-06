@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+			<div class="page-header">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+							<h5 class="text-uppercase">Author Feedback</h5>
+						</div>
+					</div>
+				</div>
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+
+                    </div>
+                </div>
+			<div class="content-page">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table datatable">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width:50px;">Acronym</th>
+                                        <th style="min-width:70px;">Name</th>
+                                        <th style="min-width:50px;">Submission Deadline</th>
+                                        <th style="min-width:90px;">Start Date</th>
+                                        <th class="text-right" style="min-width:50px;">View</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in papers %}
+                                    <tr>
+                                        <td>{{i.conference_acronym}}</td>
+                                        <td>{{i.conference_name}}</td>
+                                        <td>{{i.cfp_submission_deadline}}</td>
+                                        <td>{{i.conference_start_date}}</td>
+                                       <td class="text-right" >
+											<a href="{% url 'Detailed_Review_Feedback' id=i.id %}" class="btn btn-info btn-sm mb-1" title="View CFP">
+											<i class="fa fa-eye" aria-hidden="true"></i>
+                                            </a>
+										</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

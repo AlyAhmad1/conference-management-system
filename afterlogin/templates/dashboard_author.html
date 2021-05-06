@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="page-wrapper">
+<div>
+    {% if messages %}
+    {% for i in messages %}
+
+    <h5 style="margin-top:0px;text-align:center;background-color:Red;width:100%">{{i}}</h5>
+
+    {% endfor %}
+    {% endif %}
+
+</div>
+            <div class="content container-fluid">
+				<div class="page-header">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+							<h5 class="text-uppercase">Welcome {{U}}</h5>
+						</div>
+					</div>
+				</div>
+				<div class="row m-t-30">
+				<div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-4 m-t-30">
+					<div class="profile-widget">
+						<div class="profile-img">
+							<a href="/submit-paper" class="avatar"></a>
+						</div>
+						<h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="#">SUBMIT <br> PAPERS </a></h4>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-4 m-t-30">
+					<div class="profile-widget">
+						<div class="profile-img">
+							<a href="/view-paper" class="avatar"></a>
+						</div>
+						<h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="#">VIEW <br> PAPERS</a></h4>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-4 m-t-30">
+					<div class="profile-widget">
+						<div class="profile-img">
+							<a href="/review-viewer" class="avatar"></a>
+						</div>
+						<h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="#">PAPER <br> REVIEWS</a></h4>
+					</div>
+				</div>
+				</div>
+<!--				<div class="col-md-12 col-sm-12 col-12 col-lg-12 col-xl-12 m-t-30">-->
+<!--					<div class="profile-widget">-->
+<!--						<h4 class="user-name m-t-10 m-b-0"><a href="#">UPCOMING CONFERENCES</a></h4>-->
+<!--						<ol>-->
+<!--							<li class="float-left">The Italian Golf</li><br>-->
+<!--							<li class="float-left">Cancer Research</li><br>-->
+<!--							<li class="float-left">Al Stock Market</li>-->
+<!--						</ol>-->
+<!--					</div>-->
+<!--				</div>-->
+            </div>
+        </div>
+
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="page-wrapper"> <!-- content -->
+            <div class="content container-fluid">
+			<div class="page-header">
+					<div class="row">
+						<div class="col-lg-7 col-md-12 col-sm-12 col-12">
+							<h5 class="text-uppercase"></h5>
+						</div>
+					</div>
+				</div>
+
+			<div class="content-page">
+                    <form action="" method="GET">
+                <div class="row filter-row">
+                    <div class="col-sm-9 col-md-9">
+						<div class="form-group custom-mt-form-group">
+							<input name="q" type="text"  />
+							<label class="control-label">Please search by Acronym,Name,City and Topics</label><i class="bar"></i>
+						</div>
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <button type="submit" class="btn btn-success btn-block mt-4 mb-2"> Search </button>
+                    </div>
+                </div>
+                    </form>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table datatable">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width:50px;">Acronym</th>
+                                        <th style="min-width:70px;">Name</th>
+                                        <th style="min-width:90px;">Start Date</th>
+                                        <th style="min-width:50px;">End Date</th>
+                                        <th style="min-width:50px;">Topics</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in papers %}
+                                    <tr>
+                                        <td>{{i.conference_acronym}}</td>
+                                        <td>{{i.conference_name}}</td>
+                                        <td>{{i.conference_start_date}}</td>
+                                        <td>{{i.conference_end_date}}</td>
+                                        <td>{{i.topic_1}},{{i.topic_2}},{{i.topic_3}},{{i.topic_4}}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		</div>
+{% endblock %}

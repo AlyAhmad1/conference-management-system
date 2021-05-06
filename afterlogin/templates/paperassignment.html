@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+			<div class="page-header">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+							<h5 class="text-uppercase">Paper Assignment</h5>
+						</div>
+					</div>
+				</div>
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                      
+                    </div>
+                </div>
+			<div class="content-page">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <h5>Here your paper assignment <br> click on paper for reviews</h5>
+                            <table class="table table-striped custom-table datatable">
+                                <thead>
+                                    <tr>
+                                        <th style="min-width:50px;">Acronym</th>
+                                        <th style="min-width:70px;">Conference</th>
+                                        <th style="min-width:90px;">Deadline</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for i in papers %}
+                                    <tr>
+                                        <td>{{i.conference_acronym}}</td>
+                                        <td><a href="{% url 'review-paper' id=i.id %}">{{i.conference_name}}</a></td>
+                                        <td>{{i.cfp_submission_deadline}}</td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+		</div>
+    </div>
+{% endblock %}

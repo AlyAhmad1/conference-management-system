@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="page-wrapper"> <!-- content -->
+            <div class="content container-fluid">
+			<div class="page-header">
+					<div class="row">
+						<div class="col-lg-7 col-md-12 col-sm-12 col-12">
+							<h5 class="text-uppercase">Conference View</h5>
+						</div>
+					</div>
+				</div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-box">
+                            <div class="row">
+                                <div class="col-lg-12 m-b-20">
+                                    <ul class="list-unstyled">
+                                        <h3><strong>About Conference</strong></h3>
+                                        <li><strong>Conference Name: {{paper.conference_name}}</strong></li>
+                                        <li class="m-b-0"><strong>Conference Acronym: {{paper.conference_acronym}}</strong></li></li>
+                                        <li><strong>Conference Location: {{paper.venue}}, {{paper.city}}, {{paper.country_region}}</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div>
+                                        <h4 class="m-b-10"><strong></strong></h4>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Conference Website</strong> <span class="float-right">{{paper.webpage}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Start Date</strong> <span class="float-right">{{paper.conference_start_date}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>End Date</strong> <span class="float-right">{{paper.conference_end_date}}</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" style="margin-top: 30px;">
+                                    <h3>Extra Information</h3>
+                                    <textarea name="" id="" style="width: 100%;" rows="10">{{paper.extra_information}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+													<a href="/my-conference" >
+													<button class="btn btn-secondary">Go Back</button>
+													</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}s

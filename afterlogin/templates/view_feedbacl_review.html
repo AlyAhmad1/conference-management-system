@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="page-wrapper"> <!-- content -->
+<div>
+    {% if messages %}
+    {% for i in messages %}
+
+    <h5 style="margin-top:0px;text-align:center;background-color:Red;width:100%">{{i}}</h5>
+
+    {% endfor %}
+    {% endif %}
+
+</div>
+
+            <div class="content container-fluid">
+			<div class="page-header">
+					<div class="row">
+						<div class="col-lg-7 col-md-12 col-sm-12 col-12">
+							<h5 class="text-uppercase">Feedback and Reviews</h5>
+						</div>
+					</div>
+				</div>
+                <div class="">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-box">
+												<div style="" class="text-center">
+												<h3>Conference_Acronym: {{paper.conference_acronym}}</h3>
+												<h3>Conference_Name: {{paper.conference_name}}</h3>
+												</div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+							<div class="card" style="margin-top:50px;">
+                                        <h1>Reviews</h1>
+                                {% for i in reviews %}
+                                <small>By: {{i.email}}</small>
+                                <small>{{i.review}}</small>
+                                <hr/>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+							<div class="card" style="margin-top:50px;">
+                                        <h1>Feedback</h1>
+                                {% for i in feedback %}
+                                <small>By: {{i.email}}</small>
+                                <small>{{i.Feedback}}</small>
+                                <hr/>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+                            <div class="text-center">
+                                <a href="/Review-Feedback">
+                            <button class="btn btn-primary">Go Back</button>
+                                </a>
+                            </div>
+            </div>
+        </div>
+{% endblock %}

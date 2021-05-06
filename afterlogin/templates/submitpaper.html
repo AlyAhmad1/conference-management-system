@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <div class="page-header">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+							<h5 class="text-uppercase">SUBMIT PAPER</h5>
+						</div>
+					</div>
+				</div>
+				<div class="page-content">
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+							<div class="card">
+								<div class="card-body">	
+									<div class="row">
+										<div class="col-lg-12 col-md-6 col-sm-6 col-12">
+											<form method="GET" id="get_conference_data">
+												 {% csrf_token %}
+													<div class="form-group custom-mt-form-group">
+												<label>Select Conference</label>
+												<select id="conference_name" name="conference_name" onchange="changeFunc();" required>
+													<option value="">{{selected.conference_name}}	--------Click Here To change-----------</option>
+													{% for i in all_conferences %}
+													<option id="check" value="{{i.conference_name}}">{{i.conference_name}}</option>
+													{% endfor %}
+												</select>
+												</div>
+											</form>
+											<div class="card" id="ConferenceDetails">
+												<h2>Conference Details</h2>
+												<h5>Conference Name: {{selected.conference_name}}</h5>
+												<br/>
+												<h5>Conference Acronym: {{selected.conference_acronym}}</h5>
+												<br/>
+												<h5>Conference Start Date: {{selected.conference_start_date}}</h5>
+												<br/>
+												<h5>Conference End Date: {{selected.conference_end_date}}</h5>
+												<br/>
+												<h5>Conference Topics: {{selected.topic_1}},{{selected.topic_2}}, {{selected.topic_3}}, {{selected.topic_4}}</h5>
+												<br/>
+												<h5>Conference Primary Search Area: {{selected.primary_area}}</h5>
+												<br/>
+												<h5>Conference Secondary Search Area: {{selected.secondary_area}}</h5>
+											</div>
+
+
+											 <form action="" method="POST" enctype="multipart/form-data" class="custom-mt-form">
+												 {% csrf_token %}
+												<div style="margin-top:30px;" class="form-group custom-mt-form-group">
+													<input type="hidden" name="conference_name" value="{{selected.conference_name}}">
+													<label class="control-label">Conference Name (Selected)</label>
+													<br/>
+
+													<h5 style="margin-left:20px;">{{selected.conference_name}}</h5>
+												</div>
+												<div style="margin-top:30px;" class="form-group custom-mt-form-group">
+													<input type="hidden" name="topics" value="{{selected.topic_1}},{{selected.topic_2}}, {{selected.topic_3}}, {{selected.topic_4}}">
+													<label class="control-label">Topics</label>
+													<br/>
+													<h5 style="margin-left:20px;">{{selected.topic_1}},{{selected.topic_2}}, {{selected.topic_3}}, {{selected.topic_4}}</h5>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="paper_name" type="text" required/>
+													<label class="control-label">Paper name</label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="author" type="text" required/>
+													<label class="control-label">Author</label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="co_author" type="text" required/>
+													<label class="control-label">Co-Author<small>(if user is author then user name will come in author,multiple co-author will be separated by semicolon)</small></label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<textarea name="abstract" maxlength="1800"></textarea>
+													<label class="control-label">Abstract (max 2000)</label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													<input name="keywords" type="text" required/>
+													<label class="control-label">KeyWords (Comma separated values)</label><i class="bar"></i>
+												</div>
+												<div class="form-group custom-mt-form-group">
+													  <input type="file" name="pdf" accept="application/pdf" style="margin-bottom:10px;">
+													<label class="control-label">Select Paper</label><i class="bar"></i>
+												</div>
+												<div class="col-lg-12 col-md-12 col-sm-12 col-12">
+														<div class="form-group text-center custom-mt-form-group">
+															<button class="btn btn-primary mr-2" type="submit">Submit Paper</button>
+														</div>
+												</div>
+											 </form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+
+<script>
+   function changeFunc() {
+    var selectBox = document.getElementById("conference_name");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+	var form = document.getElementById("get_conference_data");
+    form.submit()
+   }
+</script>
+{% endblock %}
