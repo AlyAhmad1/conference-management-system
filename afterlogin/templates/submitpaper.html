@@ -1,6 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
         <div class="page-wrapper">
+<div>
+    {% if messages %}
+    {% for i in messages %}
+
+    <h5 style="margin-top:0px;text-align:center;background-color:Red;width:100%">{{i}}</h5>
+
+    {% endfor %}
+    {% endif %}
+
+</div>
+
             <div class="content container-fluid">
                 <div class="page-header">
 					<div class="row">
@@ -21,7 +32,7 @@
 													<div class="form-group custom-mt-form-group">
 												<label>Select Conference</label>
 												<select id="conference_name" name="conference_name" onchange="changeFunc();" required>
-													<option value="">{{selected.conference_name}}	--------Click Here To change-----------</option>
+													<option>{{selected.conference_name}}	--------Click Here To change-----------</option>
 													{% for i in all_conferences %}
 													<option id="check" value="{{i.conference_name}}">{{i.conference_name}}</option>
 													{% endfor %}
@@ -61,6 +72,15 @@
 													<br/>
 													<h5 style="margin-left:20px;">{{selected.topic_1}},{{selected.topic_2}}, {{selected.topic_3}}, {{selected.topic_4}}</h5>
 												</div>
+												<div style="margin-top:30px;" class="form-group custom-mt-form-group">
+													<input type="hidden" name="deadline" value="{{deadline}}">
+													<label class="control-label">Deadline</label>
+													<br/>
+													<h5 style="margin-left:20px;">{{deadline}}</h5>
+												</div>
+												 <hr/>
+												 <p style="text-align:center;">Write Your details Below</p>
+												 <hr/>
 												<div class="form-group custom-mt-form-group">
 													<input name="paper_name" type="text" required/>
 													<label class="control-label">Paper name</label><i class="bar"></i>

@@ -16,7 +16,7 @@
 			<div class="page-header">
 					<div class="row">
 						<div class="col-lg-7 col-md-12 col-sm-12 col-12">
-							<h5 class="text-uppercase"></h5>
+							<h5 class="text-uppercase">Assign Paper</h5>
 						</div>
 					</div>
 				</div>
@@ -32,7 +32,7 @@
 												<h3>Paper Name</h3>
 												<select style="border:#01c4cb 2px solid" name="primary_area" required >
                                                     {% for i in papers%}
-													<option value="{{i.conference_name}}">{{i.conference_name}}</option>
+													<option value="{{i.paper_name}}">{{i.paper_name}}</option>
                                                     {% endfor %}
                                                     {% csrf_token %}
 												</select>

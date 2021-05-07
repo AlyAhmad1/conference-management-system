@@ -21,26 +21,32 @@
                             <table class="table table-striped custom-table datatable">
                                 <thead>
                                     <tr>
-                                        <th style="min-width:50px;">Acronym</th>
                                         <th style="min-width:70px;">Name</th>
-                                        <th style="min-width:50px;">Submission Deadline</th>
+                                        <th style="min-width:50px;">Acronym</th>
                                         <th style="min-width:90px;">Start Date</th>
-                                        <th class="text-right" style="min-width:50px;">Action</th>
+                                        <th style="min-width:50px;">End Date</th>
+                                        <th class="text-center" style="min-width:50px;">View</th>
+                                        <th class="text-center" style="min-width:50px;">Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for i in all_papers %}
                                     <tr>
-                                        <td>{{i.conference_acronym}}</td>
                                         <td>{{i.conference_name}}</td>
-                                        <td>{{i.cfp_submission_deadline}}</td>
+                                        <td>{{i.conference_acronym}}</td>
                                         <td>{{i.conference_start_date}}</td>
-                                       <td class="text-right" >
-											<a href="{% url 'editcfp' id=i.id %}" class="btn btn-primary btn-sm mb-1" title="Edit CFP">
-												<i class="fa fa-pencil" aria-hidden="true"></i>
-											</a>
-											<a href="{% url 'viewcfp' id=i.id %}" class="btn btn-info btn-sm mb-1" title="View CFP">
+                                        <td>{{i.conference_end_date}}</td>
+                                       <td class="text-center" >
+<!--											<a href="" class="btn btn-primary btn-sm mb-1" title="Edit CFP">-->
+<!--												<i class="fa fa-pencil" aria-hidden="true"></i>-->
+<!--											</a>-->
+											<a href="{% url 'viewconference' id=i.conference_name %}" class="btn btn-info btn-sm mb-1" title="View CFP">
 											<i class="fa fa-eye" aria-hidden="true"></i>
+                                            </a>
+										</td>
+                                       <td class="text-center" >
+											<a href="{% url 'deletecfp' id=i.conference_name %}" class="btn btn-info btn-sm mb-1" title="View CFP">
+											<i class="fa fa-trash-o" aria-hidden="true"></i>
                                             </a>
 										</td>
                                     </tr>

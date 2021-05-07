@@ -35,24 +35,31 @@
                             <table class="table table-striped custom-table datatable">
                                 <thead>
                                     <tr>
-                                        <th style="min-width:50px;">Acronym</th>
+                                        <th style="min-width:50px;">PaperName</th>
                                         <th style="min-width:70px;">Conference</th>
                                         <th style="min-width:90px;">Deadline</th>
-                                        <th style="min-width:90px;">Give Feedback</th>
+                                        <th style="min-width:90px;">Feedback</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {% for i in papers %}
                                     <tr>
-                                        <td><a href="{% url 'review-paper' id=i.id %}">{{i.conference_acronym}}</a></td>
+                                        <td>{{i.paper_name}}</td>
                                         <td>{{i.conference_name}}</td>
-                                        <td>{{i.cfp_submission_deadline}}</td>
+                                        <td>{{i.deadline}}</td>
+                                        {% if i.feedback %}
                                         <td>
-											<a href="{% url 'author-feedback' id=i.id %}" class="btn btn-primary btn-sm mb-1" title="Edit CFP">
+											<a href="{% url 'author-feedback' id=i.paper_name %}" class="btn btn-primary btn-sm mb-1" title="Edit CFP">
+												<i class="fa fa-eye" aria-hidden="true"></i>
+											</a>
+                                        </td>
+                                        {% else %}
+                                        <td>
+											<a href="{% url 'author-feedback' id=i.paper_name %}" class="btn btn-primary btn-sm mb-1" title="Edit CFP">
 												<i class="fa fa-pencil" aria-hidden="true"></i>
 											</a>
-
                                         </td>
+                                        {% endif %}
                                     </tr>
                                 {% endfor %}
                                 </tbody>

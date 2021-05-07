@@ -128,58 +128,49 @@ def privacy(request):
 
 
 def contact_us(request):
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            name = request.POST.get('name')
-            email = request.POST.get('email')
-            subject = request.POST.get('subject')
-            msg = request.POST.get('message')
-
-            update = Contact(name=name)
-            update.email = email
-            update.subject = subject
-            update.msg = msg
-            update.save()
-
-            if update:
-                send_mail(
-                    subject,
-                    "Name: {} email: {} , message: {}".format(name, email, msg),
-                    '',
-                    ['']
-                )
-        return render(request, 'contact.html')
-    messages.error(request, 'Please Login First')
-    return redirect('login')
-
-
-def feedback(request):
-    if request.user.is_authenticated:
+    if request.method == "POST":
         name = request.POST.get('name')
         email = request.POST.get('email')
-        feedback = request.POST.get('feedback')
-        update = Feedback(name=name)
+        subject = request.POST.get('subject')
+        msg = request.POST.get('message')
+
+        update = Contact(name=name)
         update.email = email
-        update.feedback = feedback
+        update.subject = subject
+        update.msg = msg
         update.save()
 
         if update:
             send_mail(
-                "FEEDBACK",
-                "Name: {} email: {} , feedback: {}".format(name, email, feedback),
+                subject,
+                "Name: {} email: {} , message: {}".format(name, email, msg),
                 '',
                 ['']
             )
-        return render(request, 'feedback.html')
-    messages.error(request, 'Please Login First')
-    return redirect('login')
+    return render(request, 'contact.html')
+
+
+def feedback(request):
+    name = request.POST.get('name')
+    email = request.POST.get('email')
+    feedback = request.POST.get('feedback')
+    update = Feedback(name=name)
+    update.email = email
+    update.feedback = feedback
+    update.save()
+
+    if update:
+        send_mail(
+            "FEEDBACK",
+            "Name: {} email: {} , feedback: {}".format(name, email, feedback),
+            '',
+            ['']
+        )
+    return render(request, 'feedback.html')
 
 
 def conference(request):
-    if request.user.is_authenticated:
-        return render(request, 'conference.html')
-    messages.error(request, 'Please Login First')
-    return redirect('login')
+    return render(request, 'conference.html')
 
 def handle_logout(request):
     logout(request)
@@ -200,10 +191,6 @@ def forget_password(request):
             html_message = render_to_string('password_reset_email.html', {'context': 'values'})
             plain_message = strip_tags(html_message)
             mail.send_mail(subject, plain_message, EMAIL_HOST_USER, [to], html_message=html_message)
-            # # message = f'Hello Below is your reset password Link'
-            # # receiver = email
-            # # send_mail(subject, message, EMAIL_HOST_USER, [receiver], fail_silently=False)
-            # messages.error(request, f"We have Sent Password Reset Email on this Email {email}")
             return render(request, 'password_reset_sent.html')
         else:
             messages.error(request, "User Not Exist registered")

@@ -22,20 +22,21 @@
                             <table class="table table-striped custom-table datatable">
                                 <thead>
                                     <tr>
-                                        <th style="min-width:50px;">Acronym</th>
+                                        <th style="min-width:50px;">Name</th>
                                         <th style="min-width:70px;">Conference</th>
+                                        <th style="min-width:70px;">Author</th>
                                         <th style="min-width:90px;">Deadline</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {% for i in papers %}
                                     <tr>
-                                        <td>{{i.conference_acronym}}</td>
-                                        <td><a href="{% url 'review-paper' id=i.id %}">{{i.conference_name}}</a></td>
-                                        <td>{{i.cfp_submission_deadline}}</td>
+                                        <td>{{i.paper_name}}</td>
+                                        <td><a href="{% url 'review-paper' id=i.paper_name %}">{{i.conference_name}}</a></td>
+                                        <td>{{i.author}}</td>
+                                        <td>{{i.deadline}}</td>
                                     </tr>
                                 {% endfor %}
-
                                 </tbody>
                             </table>
                         </div>

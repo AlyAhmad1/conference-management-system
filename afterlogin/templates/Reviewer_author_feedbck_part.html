@@ -21,22 +21,20 @@
                             <table class="table table-striped custom-table datatable">
                                 <thead>
                                     <tr>
-                                        <th style="min-width:50px;">Acronym</th>
-                                        <th style="min-width:70px;">Name</th>
+                                        <th style="min-width:70px;">Paper Name</th>
+                                        <th style="min-width:50px;">Call For</th>
                                         <th style="min-width:50px;">Submission Deadline</th>
-                                        <th style="min-width:90px;">Start Date</th>
                                         <th class="text-right" style="min-width:50px;">View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for i in papers %}
                                     <tr>
-                                        <td>{{i.conference_acronym}}</td>
+                                        <td>{{i.paper_name}}</td>
                                         <td>{{i.conference_name}}</td>
-                                        <td>{{i.cfp_submission_deadline}}</td>
-                                        <td>{{i.conference_start_date}}</td>
+                                        <td>{{i.deadline}}</td>
                                        <td class="text-right" >
-											<a href="{% url 'Detailed_Review_Feedback' id=i.id %}" class="btn btn-info btn-sm mb-1" title="View CFP">
+											<a href="{% url 'Detailed_Review_Feedback' id=i.paper_name %}" class="btn btn-info btn-sm mb-1" title="View CFP">
 											<i class="fa fa-eye" aria-hidden="true"></i>
                                             </a>
 										</td>
