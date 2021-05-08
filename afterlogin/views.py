@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from .models import CfpData, AuthorData, ConferenceData, Reviews, Feedback
+from .models import CfpData, AuthorData, ConferenceData, Reviews, Feedback, ASSigned
 from datetime import datetime
 from django.db.models import Q
 import pickle, os
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.conf import settings
 from urllib.parse import unquote
+from core.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
+
 User = get_user_model()
 
 
@@ -18,6 +21,54 @@ def CallForPaper(request):
         return render(request, 'callforpaper.html', data)
     messages.error(request, 'You Need To login First')
     return redirect('home')
+
+
+def assign_to_conference(request):
+    papers = AuthorData.objects.filter(reviewed=True)
+    d = []
+    for i in papers:
+        paper = ConferenceData.objects.get(conference_name=i.conference_name)
+        S = ASSigned.objects.filter(paper_name=i.paper_name,conference_name=i.conference_name).first()
+
+        if S:
+            d.append([i, paper, True])
+        else:
+            d.append([i, paper, False])
+
+    data = {'U': request.user.username, 'papers':d}
+    return render(request, 'assign_paper_to_conference.html', data)
+
+
+def assign_done(request,name,name1):
+    name = unquote(name)
+    name1 = unquote(name1)
+    ASS = ASSigned.objects.filter(paper_name=name1, conference_name=name).first()
+    if ASS:
+        pass
+    else:
+        A = ASSigned(paper_name=name1, conference_name=name)
+        ASSigned.save(A)
+        d = AuthorData.objects.get(paper_name=name1)
+        plain_message = f" Congratulations your paper {name1} got selected for conference {name}"
+        subject = "Selection Notifier"
+        send_mail(subject, plain_message, EMAIL_HOST_USER, [d.email])
+    return redirect('assign_to_conference')
+
+
+def remove_assigned(request, conf, name):
+    conf = unquote(conf)
+    name = unquote(name)
+    co = ASSigned.objects.get(conference_name=conf, paper_name=name)
+    if co:
+        co.delete()
+        plain_message = f"Our Team has remove your paper {name} from list of selected paper of conference {conf}"
+        subject = "Remove Notifier"
+        d = AuthorData.objects.get(paper_name=name)
+        send_mail(subject, plain_message, EMAIL_HOST_USER, [d.email])
+    return redirect('assign_to_conference')
+
+
+
 
 
 def CreateCFP(request):
@@ -339,6 +390,8 @@ def SubmitPaper(request):
                 selected = ConferenceData.objects.get(conference_name=conference_name)
                 deadline = CfpData.objects.get(conference_name=conference_name)
                 deadline = deadline.deadline
+            else:
+                deadline = ''
         try:
             if request.method == 'POST':
                 conference_name = request.POST.get('conference_name')
@@ -408,10 +461,10 @@ def DocumentDelete(request,id):
 
 def PaperAssignment(request):
     if request.user.is_authenticated:
-        pap = AuthorData.objects.filter(paper_assigned=True, reviewed=False)
+        pap = AuthorData.objects.filter(paper_assigned=True)
         papers = []
         for i in pap:
-            Reviewed = Reviews.objects.filter(email=request.user.email, conference_name=i.conference_name)
+            Reviewed = Reviews.objects.filter(email=request.user.email, paper_name=i.paper_name)
             if Reviewed:
                 pass
             else:
@@ -432,6 +485,12 @@ def review_paper(request,id):
 
             reviewed = Reviews(email=request.user.email, conference_name=papers.conference_name, review=review,
                                paper_name=papers.paper_name, Suggest=suggest)
+            AuthorData.objects.filter(paper_name=id).update(reviewed=True)
+            Au = AuthorData.objects.get(paper_name=id)
+
+            plain_message = f"you got a review on your paper {id} by user {request.user.first_name}"
+            subject = "Review Notifier"
+            send_mail(subject, plain_message, EMAIL_HOST_USER, [Au.email])
             Reviews.save(reviewed)
             return redirect('paper-assignment')
         data = {'papers': papers,'U':request.user.username}
@@ -443,9 +502,6 @@ def review_paper(request,id):
 def paperReviewed(request):
     if request.user.is_authenticated:
         all_papers_reviewed = AuthorData.objects.filter(reviewed=True)
-        # papers = []
-        # for i in all_papers_reviewed:
-        #     papers.append(CfpData.objects.get(conference_name=i.conference_name))
         data = {'papers': all_papers_reviewed,'U':request.user.username}
         return render(request,'paper_reviewd.html', data)
     messages.error(request, 'You Need To login First')
@@ -531,3 +587,4 @@ def Review_Feedback_Detail(request, id):
         return render(request,'view_feedbacl_review.html',data)
     messages.error(request, 'You Need To login First')
     return redirect('home')
+

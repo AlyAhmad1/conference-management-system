@@ -1,6 +1,6 @@
 from django.db import models
-from django.utils import timezone
-now = timezone.now()
+from datetime import datetime
+now = datetime.now()
 
 
 class Reviews(models.Model):
@@ -34,7 +34,7 @@ class CfpData(models.Model):
     topic_2 = models.CharField(max_length=500, blank=True)
     topic_3 = models.CharField(max_length=500, blank=True)
     topic_4 = models.CharField(max_length=500, blank=True)
-    deadline = models.DateField(default=now)
+    deadline = models.DateField()
 
     def __str__(self):
         return self.conference_name
@@ -66,6 +66,12 @@ class ConferenceData(models.Model):
         return self.conference_name
 
 
+class ASSigned(models.Model):
+    paper_name = models.CharField(max_length=500)
+    conference_name = models.CharField(max_length=500)
+
+
+
 class AuthorData(models.Model):
     email = models.EmailField()
     paper_name = models.CharField(max_length=100, unique=True, blank=True)
@@ -77,7 +83,7 @@ class AuthorData(models.Model):
     keywords = models.BinaryField(max_length=1000)
     pdf_paper = models.FileField()
     paper_assigned = models.BooleanField(default=False)
-    deadline = models.DateField(default=now)
+    deadline = models.DateField()
     feedback = models.BooleanField(default=False)
     reviewed = models.BooleanField(default=False)
 

@@ -15,6 +15,9 @@ urlpatterns = [
     path('engine-cfp', views.EngineCFP, name='enginecfp'),
     path('Search-conference/', views.SearchConferece, name='searchconferece'),
     path('reviewer-assignment/', views.reviewer_assignment, name='reviewerassigment'),
+    path('assign-conference/', views.assign_to_conference, name='assign_to_conference'),
+    path('confirm-assign/<path:name>/<name1>', views.assign_done, name='assign_done'),
+    path('remove-assign/<path:conf>/<name>', views.remove_assigned, name='remove_assigned'),
 
     #author
     # path('dashboard-author/', views.AuthorDashboard,name='dashboard-author'),
