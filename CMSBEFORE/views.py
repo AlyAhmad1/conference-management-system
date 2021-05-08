@@ -27,6 +27,10 @@ def register(request):
         page = request.POST.get("webpage")
         usertype = request.POST.get("usertype")
         topic = request.POST.get("topic")
+        if topic:
+            pass
+        else:
+            topic = ''
         username = request.POST.get("username")
         email = request.POST.get("email")
         password = request.POST.get("password")

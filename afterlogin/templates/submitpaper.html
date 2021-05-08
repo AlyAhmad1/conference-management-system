@@ -49,11 +49,8 @@
 												<br/>
 												<h5>Conference End Date: {{selected.conference_end_date}}</h5>
 												<br/>
-												<h5>Conference Topics: {{selected.topic_1}},{{selected.topic_2}}, {{selected.topic_3}}, {{selected.topic_4}}</h5>
+												<h5>Conference Topic: {{selected.topic}}</h5>
 												<br/>
-												<h5>Conference Primary Search Area: {{selected.primary_area}}</h5>
-												<br/>
-												<h5>Conference Secondary Search Area: {{selected.secondary_area}}</h5>
 											</div>
 
 
@@ -67,10 +64,10 @@
 													<h5 style="margin-left:20px;">{{selected.conference_name}}</h5>
 												</div>
 												<div style="margin-top:30px;" class="form-group custom-mt-form-group">
-													<input type="hidden" name="topics" value="{{selected.topic_1}},{{selected.topic_2}}, {{selected.topic_3}}, {{selected.topic_4}}">
-													<label class="control-label">Topics</label>
+													<input type="hidden" name="topics" value="{{selected.topic}}">
+													<label class="control-label">Topic</label>
 													<br/>
-													<h5 style="margin-left:20px;">{{selected.topic_1}},{{selected.topic_2}}, {{selected.topic_3}}, {{selected.topic_4}}</h5>
+													<h5 style="margin-left:20px;">{{selected.topic}}</h5>
 												</div>
 												<div style="margin-top:30px;" class="form-group custom-mt-form-group">
 													<input type="hidden" name="deadline" value="{{deadline}}">

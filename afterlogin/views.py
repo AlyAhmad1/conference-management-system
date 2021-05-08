@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from .models import CfpData, AuthorData, ConferenceData, Reviews, Feedback, ASSigned
+from .models import CfpData, AuthorData, ConferenceData, Reviews, Feedback, ASSigned, PaperAssignmentS
 from datetime import datetime
 from django.db.models import Q
 import pickle, os
@@ -10,6 +10,8 @@ from django.conf import settings
 from urllib.parse import unquote
 from core.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
+from .string_match import similar
+import pandas
 
 User = get_user_model()
 
@@ -27,7 +29,7 @@ def assign_to_conference(request):
     papers = AuthorData.objects.filter(reviewed=True)
     d = []
     for i in papers:
-        paper = ConferenceData.objects.get(conference_name=i.conference_name)
+        paper = ConferenceData.objects.filter(conference_name=i.conference_name).first()
         S = ASSigned.objects.filter(paper_name=i.paper_name,conference_name=i.conference_name).first()
 
         if S:
@@ -68,9 +70,6 @@ def remove_assigned(request, conf, name):
     return redirect('assign_to_conference')
 
 
-
-
-
 def CreateCFP(request):
     if request.user.is_authenticated:
         selected = ''
@@ -94,8 +93,7 @@ def CreateCFP(request):
                 newcfp = CfpData(email=request.user.email, conference_name=conference_name,
                                  conference_acronym=conference_acronym,
                                  conference_start_date=conference_start_date, conference_end_date=conference_end_date,
-                                 topic_1=current.topic_1, topic_2=current.topic_2, topic_3=current.topic_3,
-                                 topic_4=current.topic_4, deadline=deadline)
+                                 topic=current.topic, deadline=deadline)
 
                 CfpData.save(newcfp)
                 return redirect('cfp')
@@ -151,19 +149,16 @@ def MyConference(request):
 def CreateConference(request):
     if request.user.is_authenticated:
         U = request.user.username
-
         conference_name = request.POST.get('conference_name')
         conference_acronym = request.POST.get('conference_acronym')
         conference_start_date = request.POST.get('conference_start_date')
         conference_end_date = request.POST.get('conference_end_date')
         organizer = request.POST.get('organizer')
         organizer_webpage = request.POST.get('organizer_webpage')
-        webpage = request.POST.get('webpage')
         venue = request.POST.get('venue')
         city = request.POST.get('city')
         country_region = request.POST.get('country_region')
-        primary_area = request.POST.get('primary_area')
-        secondary_area = request.POST.get('secondary_area')
+        topic = request.POST.get('topic')
         area_notes = request.POST.get('area_notes')
 
         if request.method == 'POST':
@@ -171,22 +166,6 @@ def CreateConference(request):
                 pass
             else:
                 area_notes = ''
-            topic_1 = request.POST.get('topic_1')
-            topic_2 = request.POST.get('topic_2')
-            if topic_2:
-                pass
-            else:
-                topic_2 = ''
-            topic_3 = request.POST.get('topic_3')
-            if topic_3:
-                pass
-            else:
-                topic_3 = ''
-            topic_4 = request.POST.get('topic_4')
-            if topic_4:
-                pass
-            else:
-                topic_4 = ''
             extra_information = request.POST.get("extra_information")
             if extra_information:
                 pass
@@ -197,12 +176,10 @@ def CreateConference(request):
                                              conference_acronym = conference_acronym,
                                              conference_start_date = conference_start_date,
                                              conference_end_date =conference_end_date, organizer = organizer,
-                                             organizer_webpage = organizer_webpage, webpage = webpage,
+                                             organizer_webpage = organizer_webpage,
+                                             topic=topic,
                                              venue = venue, city = city, country_region = country_region,
-                                             primary_area = primary_area, secondary_area = secondary_area,
-                                             area_notes = area_notes,
-                                             topic_1 = topic_1, topic_2 = topic_2,
-                                             topic_3 = topic_3, topic_4 = topic_4, extra_information = extra_information)
+                                             area_notes = area_notes, extra_information = extra_information)
             ConferenceData.save(conference_data)
             return redirect('myconference')
         data = {'U':U}
@@ -223,48 +200,27 @@ def EditConference(request, id):
             conference_end_date = datetime.strptime(conference_end_date, '%d/%m/%Y')
             organizer = request.POST.get('organizer')
             organizer_webpage = request.POST.get('organizer_webpage')
-            webpage = request.POST.get('webpage')
             venue = request.POST.get('venue')
             city = request.POST.get('city')
             country_region = request.POST.get('country_region')
-            primary_area = request.POST.get('primary_area')
-            secondary_area = request.POST.get('secondary_area')
             area_notes = request.POST.get('area_notes')
+            topic = request.POST.get('topic')
             if area_notes:
                 pass
             else:
                 area_notes = ''
-            topic_1 = request.POST.get('topic_1')
-            topic_2 = request.POST.get('topic_2')
-            if topic_2:
-                pass
-            else:
-                topic_2 = ''
-            topic_3 = request.POST.get('topic_3')
-            if topic_3:
-                pass
-            else:
-                topic_3 = ''
-            topic_4 = request.POST.get('topic_4')
-            if topic_4:
-                pass
-            else:
-                topic_4 = ''
             extra_information = request.POST.get("extra_information")
             if extra_information:
                 pass
             else:
                 extra_information = ''
             ConferenceData.objects.filter(id=id).update(email = request.user.email, conference_name = conference_name,
-                                             conference_acronym = conference_acronym,
+                                             conference_acronym = conference_acronym,topic=topic,
                                              conference_start_date = conference_start_date,
                                              conference_end_date =conference_end_date, organizer = organizer,
-                                             organizer_webpage = organizer_webpage, webpage = webpage,
+                                             organizer_webpage = organizer_webpage,
                                              venue = venue, city = city, country_region = country_region,
-                                             primary_area = primary_area, secondary_area = secondary_area,
                                              area_notes = area_notes,
-                                             topic_1 = topic_1, topic_2 = topic_2,
-                                             topic_3 = topic_3, topic_4 = topic_4,
                                              extra_information = extra_information)
             return redirect('myconference')
         try:
@@ -349,18 +305,50 @@ def SearchConferece(request):
 
 def reviewer_assignment(request):
     if request.user.is_authenticated:
+        topic = ''
+        if request.method == 'GET':
+            topic = request.GET.get('topic')
+        if topic != '':
+            all_authors = AuthorData.objects.filter(topics=topic,paper_assigned=False)
+            all_reviewers = User.objects.filter(Topic=topic, Role='Reviewer')
+        else:
+            all_authors = ''
+            all_reviewers = ''
+
         if request.method == 'POST':
-            name = request.POST.get('primary_area')
-            AuthorData.objects.filter(paper_name=name).update(paper_assigned=True)
-            messages.error(request, f'{name} Assigned')
-        papers = AuthorData.objects.filter(paper_assigned=False)
-        data = {'papers':papers, 'U':request.user.username}
+            paper_name = request.POST.get('primary_area')
+            reviewer = request.POST.get('reviewer')
+            if reviewer != 'N':
+                rev = User.objects.get(first_name=reviewer)
+                already_assigned = PaperAssignmentS.objects.filter(email=rev.email, paper_name=paper_name).first()
+                if not already_assigned:
+                    if rev != 'N':
+                        C = AuthorData.objects.get(paper_name=paper_name)
+                        ass = PaperAssignmentS(email=rev.email, paper_name=paper_name, conference_name=C.conference_name,
+                                              topic_name=rev.Topic)
+                        PaperAssignmentS.save(ass)
+                        messages.error(request, f'{paper_name} Assigned')
+                else:
+                    messages.error(request, f'{paper_name} Already Assigned to the {rev}')
+            else:
+                ttt = AuthorData.objects.get(paper_name=paper_name)
+                all_rev = User.objects.filter(Topic=ttt.topics, Role='Reviewer')
+                data_set = []
+                for i in all_rev:
+                    data_set.append(i.first_name)
+                df = pandas.DataFrame(data_set)
+                Name = similar(paper_name, df)
+                print('*******', Name)
+
+        data = {'all_authors': all_authors, 'all_reviewers': all_reviewers, 'U':request.user.username, }
         return render(request, 'reviewer_assignment.html', data)
     messages.error(request, 'You Need To login First')
     return redirect('home')
 
 
 selected = ''
+
+
 def conference(request):
     if request.user.is_authenticated:
         global selected
@@ -461,14 +449,16 @@ def DocumentDelete(request,id):
 
 def PaperAssignment(request):
     if request.user.is_authenticated:
-        pap = AuthorData.objects.filter(paper_assigned=True)
+        pap = PaperAssignmentS.objects.filter(email=request.user.email)
+
         papers = []
         for i in pap:
             Reviewed = Reviews.objects.filter(email=request.user.email, paper_name=i.paper_name)
+            AU = AuthorData.objects.get(conference_name=i.conference_name)
             if Reviewed:
                 pass
             else:
-                papers.append(i)
+                papers.append([i, AU])
         data = {'papers': papers, 'U':request.user.username}
         return render(request,'paperassignment.html', data)
     messages.error(request, 'You Need To login First')

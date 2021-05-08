@@ -29,12 +29,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {% for i in papers %}
+                                {% for i,j in papers %}
                                     <tr>
                                         <td>{{i.paper_name}}</td>
                                         <td><a href="{% url 'review-paper' id=i.paper_name %}">{{i.conference_name}}</a></td>
-                                        <td>{{i.author}}</td>
-                                        <td>{{i.deadline}}</td>
+                                        <td>{{j.author}}</td>
+                                        <td>{{j.deadline}}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

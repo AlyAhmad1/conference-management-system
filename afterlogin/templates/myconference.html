@@ -20,11 +20,10 @@
                                         <th style="min-width:50px;">Acronym</th>
                                         <th style="min-width:90px;">Start Date</th>
                                         <th style="min-width:90px;">End Date</th>
-                                        <th style="min-width:50px;">Topics</th>
+                                        <th style="min-width:50px;">Topic</th>
                                         <th class="text-right" style="min-width:50px;">Edit</th>
                                         <th class="text-right" style="min-width:50px;">View</th>
                                         <th class="text-right" style="min-width:50px;">Delete</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -34,7 +33,7 @@
                                         <td>{{i.conference_acronym}}</td>
                                         <td>{{i.conference_start_date}}</td>
                                         <td>{{i.conference_end_date}}</td>
-                                       <td>{{i.topic_1}}, {{i.topic_2}}, {{i.topic_3}}, {{i.topic_4}}</td>
+                                       <td>{{i.topic}}</td>
                                        <td class="text-center" >
 											<a href="{% url 'editconference' id=i.id %}" class="btn btn-primary btn-sm mb-1" title="Edit CFP">
 												<i class="fa fa-pencil" aria-hidden="true"></i>

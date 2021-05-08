@@ -27,32 +27,88 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div>
+										<p>Please Select Topic First</p>
+											<form method="GET" id="get_conference_data">
+												 {% csrf_token %}
+												<div style="margin-left:300px;margin-right:300px;width:50%" class="custom-mt-form-group">
+												<h4 style="text-align:left;">Topic</h4>
+												<select name="topic" style="border:#01c4cb 2px solid" id="conference_name"  onchange="changeFunc();" required>
+													<option value="">--------Select--------</option>
+													<option value="Accounting and Finance">Accounting and Finance</option>
+													<option value="Art and Literature">Art and Literature</option>
+													<option value="Business and Management">Business and Management</option>
+													<option value="Chemistry">Chemistry</option>
+													<option value="Civil Engineering">Civil Engineering</option>
+													<option value="Computing">Computing</option>
+													<option value="Earth and Environmental Sciences">Earth and Environmental Sciences</option>
+													<option value="Economics">Economics</option>
+													<option value="Education Science">Education Science</option>
+													<option value="Energy">Energy</option>
+													<option value="Engineering">Engineering</option>
+													<option value="Geonomics and Bioinfirmatics">Geonomics and Bioinfirmatics</option>
+													<option value="Health Sciences">Health Sciences</option>
+													<option value="Language and Linguistics">Language and Linguistics</option>
+													<option value="Materials Sciences">Materials Sciences</option>
+													<option value="Mathmatics and Statistics">Mathmatics and Statistics</option>
+													<option value="Mechanical Engineering">Mechanical Engineering</option>
+													<option value="Philosophy and Psychology">Philosophy and Psychology</option>
+													<option value="Physics">Physics</option>
+													<option value="Social Sciences">Social Sciences</option>
+													<option value="Technology">Technology</option>
+												</select>
+												</div>
+                                            </form>
+
+
                                         <form method="POST">
 												<div style="margin-left:300px;margin-right:300px;width:50%" class="custom-mt-form-group">
-												<h3>Paper Name</h3>
+												<h4 style="text-align:left;">Paper Name</h4>
 												<select style="border:#01c4cb 2px solid" name="primary_area" required >
-                                                    {% for i in papers%}
+                                                    {% for i in all_authors %}
 													<option value="{{i.paper_name}}">{{i.paper_name}}</option>
                                                     {% endfor %}
                                                     {% csrf_token %}
 												</select>
 												</div>
-                                                    <label>Reviewer</label>
-                                                    <input >
-
+												<div style="margin-left:300px;margin-right:300px;width:50%" class="custom-mt-form-group">
+												<h4 style="text-align:left;">Reviewers</h4>
+												<select style="border:#01c4cb 2px solid" name="reviewer">
+<!--													<option value="N" selected>&#45;&#45;&#45;&#45;&#45;&#45;Select User-&#45;&#45;&#45;&#45;</option>-->
+                                                    {% for i in all_reviewers %}
+													<option value="{{i.first_name}}">{{i.first_name}}</option>
+                                                    {% endfor %}
+                                                    {% csrf_token %}
+												</select>
+												</div>
                                             <button class="btn btn-primary">Assign</button>
+<!--                    <div style="margin-top:20px;" class="text-center">-->
+<!--                                            <button  class="btn btn-primary">Automate Button</button>-->
+<!--					</div>-->
+
                                         </form>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                    </div>
-                    </div>
-                    <div class="text-center">
+                    <div style="margin-top:20px;" class="text-center">
                                             <button  class="btn btn-primary">Automate Button</button>
-                </div>
+					</div>
+
+                    </div>
+                    </div>
 
                     </div>
             </div>
         </div>
+<script>
+   function changeFunc() {
+    var selectBox = document.getElementById("conference_name");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+	var form = document.getElementById("get_conference_data");
+    form.submit()
+   }
+</script>
+
+
 {% endblock %}
