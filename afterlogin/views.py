@@ -333,12 +333,28 @@ def reviewer_assignment(request):
             else:
                 ttt = AuthorData.objects.get(paper_name=paper_name)
                 all_rev = User.objects.filter(Topic=ttt.topics, Role='Reviewer')
-                data_set = []
+                re = []
+                topics = []
                 for i in all_rev:
-                    data_set.append(i.first_name)
-                df = pandas.DataFrame(data_set)
-                Name = similar(paper_name, df)
-                print('*******', Name)
+                    re.append(i.first_name)
+                    topics.append(i.Topic)
+
+                dataset = {'keywords': topics, 'session':re}
+                df = pandas.DataFrame(dataset)
+                Name = similar([paper_name], df)
+
+                rev = User.objects.get(first_name=Name)
+                already_assigned = PaperAssignmentS.objects.filter(email=rev.email, paper_name=paper_name).first()
+                if not already_assigned:
+                    if rev != 'N':
+                        C = AuthorData.objects.get(paper_name=paper_name)
+                        ass = PaperAssignmentS(email=rev.email, paper_name=paper_name, conference_name=C.conference_name,
+                                              topic_name=rev.Topic)
+                        PaperAssignmentS.save(ass)
+                        messages.error(request, f'{paper_name} Assigned')
+                else:
+                    messages.error(request, f'{paper_name} Already Assigned to the {rev}')
+
 
         data = {'all_authors': all_authors, 'all_reviewers': all_reviewers, 'U':request.user.username, }
         return render(request, 'reviewer_assignment.html', data)

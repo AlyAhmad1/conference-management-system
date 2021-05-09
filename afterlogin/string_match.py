@@ -5,24 +5,16 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 #test data
 # df = pd.read_csv('https://raw.githubusercontent.com/Soot3/testing/master/ICMLA_2014_2015_2016_2017.csv',encoding='latin',skip_blank_lines=True)
-
-# function inputs; the topics as a string, the dataset with reviewer topics and the reviewer name
+#
+# # function inputs; the topics as a string, the dataset with reviewer topics and the reviewer name
 # reviewer_dataset = df.loc[:,('keywords', 'session')]
 # paper_topic = df['keywords'].sample()
-
-# vectorizer function (takes in string values and outputs vector with word frequencies)
-# vec = CountVectorizer()
+#
+# # vectorizer function (takes in string values and outputs vector with word frequencies)
+vec = CountVectorizer()
 
 # string matching function
 def similar(topic,dataset):
-  # function inputs; the topics as a string, the dataset with reviewer topics and the reviewer name
-  df = dataset
-  reviewer_dataset = df.loc[:, ('keywords', 'session')]
-  paper_topic = df['keywords'].sample()
-
-  # vectorizer function (takes in string values and outputs vector with word frequencies)
-  vec = CountVectorizer()
-
   # topics from the reviewers are isolated and vectorized
   reviewer_topics = dataset['keywords']
   reviewer = vec.fit_transform(reviewer_topics)
